@@ -1,9 +1,24 @@
+// Author: Reagan Otema
 using System;
 
-class Program
+class Exercise2_Conditionals
 {
-    static void Main(string[] args)
+    static void Main()
     {
-        Console.WriteLine("Hello World! This is the Exercise2 Project.");
+        Console.Write("Enter a number: ");
+        int number = int.Parse(Console.ReadLine());
+
+        if (number > 0)
+        {
+            Console.WriteLine("The number is positive.");
+        }
+        else if (number < 0)
+        {
+            Console.WriteLine("The number is negative.");
+        }
+        else
+        {
+            Console.WriteLine("The number is zero.");
+        }
     }
 }

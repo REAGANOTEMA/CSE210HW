@@ -1,9 +1,16 @@
+// Author: Reagan Otema
 using System;
 
-class Program
+class Exercise1_Variables
 {
-    static void Main(string[] args)
+    static void Main()
     {
-        Console.WriteLine("Hello World! This is the Exercise1 Project.");
+        Console.Write("Enter your name: ");
+        string name = Console.ReadLine();
+
+        Console.Write("Enter your age: ");
+        int age = int.Parse(Console.ReadLine());
+
+        Console.WriteLine($"Hello, {name}! You are {age} years old.");
     }
 }

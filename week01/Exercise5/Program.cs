@@ -1,9 +1,19 @@
+// Author: Reagan Otema
 using System;
 
-class Program
+class Exercise5_Functions
 {
-    static void Main(string[] args)
+    static void Main()
     {
-        Console.WriteLine("Hello World! This is the Exercise5 Project.");
+        Console.Write("Enter a number: ");
+        int number = int.Parse(Console.ReadLine());
+
+        int result = Square(number);
+        Console.WriteLine($"The square of {number} is {result}.");
+    }
+
+    static int Square(int num)
+    {
+        return num * num;
     }
 }
