@@ -1,9 +1,30 @@
-using System;
+using Newtonsoft.Json;
 
-class Program
+namespace EternalQuest
 {
-    static void Main(string[] args)
+    [JsonObject(MemberSerialization.OptIn)]
+    public abstract class Goal
     {
-        Console.WriteLine("Hello World! This is the EternalQuest Project.");
+        [JsonProperty]
+        public string Name { get; set; }
+
+        [JsonProperty]
+        public string Description { get; set; }
+
+        [JsonProperty]
+        protected int points;
+
+        protected Goal(string name, string description, int points)
+        {
+            Name = name;
+            Description = description;
+            this.points = points;
+        }
+
+        public abstract int RecordEvent();
+
+        public abstract bool IsComplete();
+
+        public abstract string DisplayStatus();
     }
 }

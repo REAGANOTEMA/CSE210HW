@@ -1,0 +1,137 @@
+using System;
+
+namespace EternalQuest
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            string saveFile = "eternalquest_save.json";
+            GoalManager manager = GoalManager.Load(saveFile);
+
+            bool running = true;
+
+            while (running)
+            {
+                Console.WriteLine("\n--- Eternal Quest ---");
+                manager.DisplayGoals();
+                Console.WriteLine($"Total Score: {manager.GetScore()}");
+                Console.WriteLine("\nMenu:");
+                Console.WriteLine("1. Record an event");
+                Console.WriteLine("2. Add a new goal");
+                Console.WriteLine("3. Save progress");
+                Console.WriteLine("4. Load progress");
+                Console.WriteLine("5. Exit");
+                Console.Write("Choose an option: ");
+
+                string input = Console.ReadLine();
+                Console.WriteLine();
+
+                switch (input)
+                {
+                    case "1":
+                        Console.Write("Enter goal number to record: ");
+                        if (int.TryParse(Console.ReadLine(), out int goalNum))
+                        {
+                            manager.RecordGoalEvent(goalNum - 1);
+                        }
+                        else
+                        {
+                            Console.WriteLine("Invalid input.");
+                        }
+                        break;
+
+                    case "2":
+                        AddNewGoal(manager);
+                        break;
+
+                    case "3":
+                        manager.Save(saveFile);
+                        break;
+
+                    case "4":
+                        manager = GoalManager.Load(saveFile);
+                        break;
+
+                    case "5":
+                        running = false;
+                        break;
+
+                    default:
+                        Console.WriteLine("Invalid option.");
+                        break;
+                }
+            }
+
+            Console.WriteLine("Thanks for playing Eternal Quest! Goodbye!");
+        }
+
+        static void AddNewGoal(GoalManager manager)
+        {
+            Console.WriteLine("Choose goal type to add:");
+            Console.WriteLine("1. Simple Goal");
+            Console.WriteLine("2. Eternal Goal");
+            Console.WriteLine("3. Checklist Goal");
+            Console.Write("Choice: ");
+            string choice = Console.ReadLine();
+
+            Console.Write("Enter goal name: ");
+            string name = Console.ReadLine();
+
+            Console.Write("Enter goal description: ");
+            string description = Console.ReadLine();
+
+            switch (choice)
+            {
+                case "1":
+                    Console.Write("Enter points awarded on completion: ");
+                    if (int.TryParse(Console.ReadLine(), out int simplePoints))
+                    {
+                        manager.AddGoal(new SimpleGoal(name, description, simplePoints));
+                        Console.WriteLine("Simple goal added.");
+                    }
+                    else
+                    {
+                        Console.WriteLine("Invalid points value.");
+                    }
+                    break;
+
+                case "2":
+                    Console.Write("Enter points awarded each time: ");
+                    if (int.TryParse(Console.ReadLine(), out int eternalPoints))
+                    {
+                        manager.AddGoal(new EternalGoal(name, description, eternalPoints));
+                        Console.WriteLine("Eternal goal added.");
+                    }
+                    else
+                    {
+                        Console.WriteLine("Invalid points value.");
+                    }
+                    break;
+
+                case "3":
+                    Console.Write("Enter points awarded per completion: ");
+                    bool p1 = int.TryParse(Console.ReadLine(), out int perCompletion);
+                    Console.Write("Enter number of times required to complete: ");
+                    bool p2 = int.TryParse(Console.ReadLine(), out int requiredTimes);
+                    Console.Write("Enter bonus points upon completion: ");
+                    bool p3 = int.TryParse(Console.ReadLine(), out int bonus);
+
+                    if (p1 && p2 && p3)
+                    {
+                        manager.AddGoal(new ChecklistGoal(name, description, perCompletion, requiredTimes, bonus));
+                        Console.WriteLine("Checklist goal added.");
+                    }
+                    else
+                    {
+                        Console.WriteLine("Invalid input values.");
+                    }
+                    break;
+
+                default:
+                    Console.WriteLine("Invalid choice.");
+                    break;
+            }
+        }
+    }
+}
