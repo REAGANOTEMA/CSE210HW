@@ -1,29 +1,39 @@
-using Newtonsoft.Json;
-
 namespace EternalQuest
 {
-    public class SimpleGoal : Goal
+    class SimpleGoal : Goal
     {
-        [JsonProperty]
-        private bool completed;
+        private bool isComplete;
 
-        public SimpleGoal(string name, string description, int points) : base(name, description, points)
+        public SimpleGoal(string name, string description, int points)
         {
-            completed = false;
+            Name = name;
+            Description = description;
+            Points = points;
+            isComplete = false;
         }
 
-        public override int RecordEvent()
+        public override void RecordEvent(ref int score)
         {
-            if (!completed)
+            if (!isComplete)
             {
-                completed = true;
-                return points;
+                isComplete = true;
+                score += Points;
+                Console.WriteLine($"Goal completed! You earned {Points} points.");
             }
-            return 0;
+            else
+            {
+                Console.WriteLine("This goal has already been completed.");
+            }
         }
 
-        public override bool IsComplete() => completed;
+        public override string GetStatus()
+        {
+            return $"[{(isComplete ? "X" : " ")}] {Name} ({Description})";
+        }
 
-        public override string DisplayStatus() => completed ? "[X]" : "[ ]";
+        public override string SaveString()
+        {
+            return $"SimpleGoal|{Name}|{Description}|{Points}|{isComplete}";
+        }
     }
 }

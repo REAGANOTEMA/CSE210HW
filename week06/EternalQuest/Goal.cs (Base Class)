@@ -1,0 +1,18 @@
+using System;
+
+namespace EternalQuest
+{
+    abstract class Goal
+    {
+        public string Name { get; set; }
+        public string Description { get; set; }
+        protected int Points;
+
+        public abstract void RecordEvent(ref int score);
+        public abstract string GetStatus();
+        public abstract string SaveString();
+
+        // Creativity: virtual method for bonus system
+        public virtual int GetBonus() => 0;
+    }
+}
