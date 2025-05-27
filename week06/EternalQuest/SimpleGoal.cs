@@ -1,39 +1,31 @@
-namespace EternalQuest
+public class SimpleGoal : Goal
 {
-    class SimpleGoal : Goal
+    private bool _isComplete;
+
+    public SimpleGoal(string name, string description, int points)
+        : base(name, description, points)
     {
-        private bool isComplete;
+        _isComplete = false;
+    }
 
-        public SimpleGoal(string name, string description, int points)
+    public override void RecordEvent(Player player)
+    {
+        if (!_isComplete)
         {
-            Name = name;
-            Description = description;
-            Points = points;
-            isComplete = false;
+            _isComplete = true;
+            player.AddPoints(Points);
+            Console.WriteLine($"Goal '{Name}' completed! +{Points} points.");
         }
-
-        public override void RecordEvent(ref int score)
+        else
         {
-            if (!isComplete)
-            {
-                isComplete = true;
-                score += Points;
-                Console.WriteLine($"Goal completed! You earned {Points} points.");
-            }
-            else
-            {
-                Console.WriteLine("This goal has already been completed.");
-            }
-        }
-
-        public override string GetStatus()
-        {
-            return $"[{(isComplete ? "X" : " ")}] {Name} ({Description})";
-        }
-
-        public override string SaveString()
-        {
-            return $"SimpleGoal|{Name}|{Description}|{Points}|{isComplete}";
+            Console.WriteLine($"Goal '{Name}' is already completed.");
         }
     }
+
+    public override bool IsComplete() => _isComplete;
+
+    public override string GetStatus() => _isComplete ? "[X]" : "[ ]";
+
+    public override string Serialize()
+        => $"SimpleGoal|{Name}|{Description}|{Points}|{_isComplete}";
 }

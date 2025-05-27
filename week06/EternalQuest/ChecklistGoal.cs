@@ -1,49 +1,33 @@
-using Newtonsoft.Json;
-
-namespace EternalQuest
+public class ChecklistGoal : Goal
 {
-    public class ChecklistGoal : Goal
+    private int _targetCount;
+    private int _currentCount;
+    private int _bonusPoints;
+
+    public ChecklistGoal(string name, string description, int points, int targetCount, int bonusPoints)
+        : base(name, description, points)
     {
-        [JsonProperty]
-        private int timesCompleted;
+        _targetCount = targetCount;
+        _currentCount = 0;
+        _bonusPoints = bonusPoints;
+    }
 
-        [JsonProperty]
-        private int requiredCompletions;
-
-        [JsonProperty]
-        private int bonusPoints;
-
-        public ChecklistGoal(string name, string description, int pointsPerCompletion, int requiredCompletions, int bonusPoints)
-            : base(name, description, pointsPerCompletion)
+    public override void RecordEvent(Player player)
+    {
+        _currentCount++;
+        player.AddPoints(Points);
+        Console.WriteLine($"Checklist Goal '{Name}': Progress {_currentCount}/{_targetCount} (+{Points} points).");
+        if (_currentCount == _targetCount)
         {
-            timesCompleted = 0;
-            this.requiredCompletions = requiredCompletions;
-            this.bonusPoints = bonusPoints;
-        }
-
-        public override int RecordEvent()
-        {
-            if (timesCompleted < requiredCompletions)
-            {
-                timesCompleted++;
-                if (timesCompleted == requiredCompletions)
-                {
-                    return points + bonusPoints;
-                }
-                else
-                {
-                    return points;
-                }
-            }
-            return 0;
-        }
-
-        public override bool IsComplete() => timesCompleted >= requiredCompletions;
-
-        public override string DisplayStatus()
-        {
-            string status = IsComplete() ? "[X]" : "[ ]";
-            return $"{status} Completed {timesCompleted}/{requiredCompletions} times";
+            player.AddPoints(_bonusPoints);
+            Console.WriteLine($"Bonus! Checklist Goal '{Name}' completed! +{_bonusPoints} bonus points.");
         }
     }
+
+    public override bool IsComplete() => _currentCount >= _targetCount;
+
+    public override string GetStatus() => $"[{_currentCount}/{_targetCount}]";
+
+    public override string Serialize()
+        => $"ChecklistGoal|{Name}|{Description}|{Points}|{_currentCount}|{_targetCount}|{_bonusPoints}";
 }

@@ -1,28 +1,18 @@
-namespace EternalQuest
+public class EternalGoal : Goal
 {
-    class EternalGoal : Goal
+    public EternalGoal(string name, string description, int points)
+        : base(name, description, points) { }
+
+    public override void RecordEvent(Player player)
     {
-        public EternalGoal(string name, string description, int points)
-        {
-            Name = name;
-            Description = description;
-            Points = points;
-        }
-
-        public override void RecordEvent(ref int score)
-        {
-            score += Points;
-            Console.WriteLine($"Eternal goal recorded! You earned {Points} points.");
-        }
-
-        public override string GetStatus()
-        {
-            return $"[∞] {Name} ({Description})";
-        }
-
-        public override string SaveString()
-        {
-            return $"EternalGoal|{Name}|{Description}|{Points}";
-        }
+        player.AddPoints(Points);
+        Console.WriteLine($"Eternal Goal '{Name}' recorded! +{Points} points.");
     }
+
+    public override bool IsComplete() => false;
+
+    public override string GetStatus() => "[∞]";
+
+    public override string Serialize()
+        => $"EternalGoal|{Name}|{Description}|{Points}";
 }
