@@ -1,0 +1,13 @@
+{
+  "version": 2,
+  "dgSpecHash": "l+Jrbc3x47o=",
+  "success": true,
+  "projectFilePath": "C:\\Users\\ok\\Desktop\\CSE210\\CSE210HW\\week07\\ExerciseTracking\\ExerciseTracking.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\ok\\.nuget\\packages\\microsoft.netcore.app.ref\\8.0.16\\microsoft.netcore.app.ref.8.0.16.nupkg.sha512",
+    "C:\\Users\\ok\\.nuget\\packages\\microsoft.windowsdesktop.app.ref\\8.0.16\\microsoft.windowsdesktop.app.ref.8.0.16.nupkg.sha512",
+    "C:\\Users\\ok\\.nuget\\packages\\microsoft.aspnetcore.app.ref\\8.0.16\\microsoft.aspnetcore.app.ref.8.0.16.nupkg.sha512",
+    "C:\\Users\\ok\\.nuget\\packages\\microsoft.netcore.app.host.win-x64\\8.0.16\\microsoft.netcore.app.host.win-x64.8.0.16.nupkg.sha512"
+  ],
+  "logs": []
+}
